@@ -1,2 +1,2 @@
-# edc-model-describe
-edc-model-describe
+# edc-describe
+edc-describe
