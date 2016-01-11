@@ -1,0 +1,12 @@
+    <h4>Model Names for Application {{app_label}}</h4>
+    <i>Click on a model below</i>
+    <table class="result">
+    <tbody>
+        {% for model_name in model_names %}
+            <tr class="{% cycle 'row1' 'row2'%}">
+            <td><A href="?app_label={{app_label}}&model_name={{model_name.module_name}}">{{model_name.verbose_name}}</A></td>
+            </tr>
+        {% endfor %}    
+    </tbody>
+    </table>
+

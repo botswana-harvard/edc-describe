@@ -1,0 +1,102 @@
+{% extends "section.html"%}
+{% load common_tags %}{% load describer_tags %}
+
+{% block content %}
+
+<A name="top"></A>
+<form action="." method="POST">
+<div style='display:none'>  
+  {% csrf_token %}
+</div>
+
+<table>
+<tr>
+{% for f in form %}
+<td class="field">
+    {{ f.errors }}
+    <label for="id_{{f.name}}">{{f.label}}</label>
+    {{ f }}
+</td>
+{% endfor %}
+<td>
+    <input type="submit" value="Submit" class="default" name="submit" />
+</td>
+
+<script type="text/javascript">document.getElementById("id_app_label").focus();</script>
+<script type="text/javascript">
+    (function($) {
+        var field = null;
+    })(django.jQuery);
+</script>
+    </table>
+</form>
+
+{% if model_list %}
+    <H4>{{ model_list_title }}</H4>
+
+    <OL>
+    {%for model in model_list %}
+    <LI>{% if model_reports %}<A href="#{{model.module_name}}">{% endif %}{{ model.verbose_name|capfirst }}</A></LI>
+    {% endfor %}
+    </OL>
+{% endif %}
+
+{% if model_reports %}
+    <H4>Data Summaries by Site and Gender</H4>
+{% endif %}
+
+{% for ordered_key in model_reports_ordered_keys %}
+    {% for key, model_report in model_reports.items %}
+    {% if key == ordered_key %}
+    <P><A name="{{model_report.name}}"></A></P>
+    <B>{{ model_report.verbose_name }}</B>&nbsp;[<A href="#top">top</A>]
+    <table id=result">
+    <thead>
+    <th>Month</th>
+    {% for site in sites %}    
+      <th colspan="1">{{ site }}</th>
+    {% endfor %}
+    <th>total</th>
+    </thead>    
+    <tbody>
+    {% for year in years %}
+        {% for month in months %}
+            <tr>        
+            <td>{{ year }}-{{ month }}</td>
+            {% for site in sites %}    
+                {% for data in model_report.data %}
+                    {% if forloop.first %}
+                        <td align="right">
+                    {% endif %}    
+                    {% if data.site_name == site and data.month == month %} 
+                        {% update_cumulative_frequency data.frequency cumulative_frequency as cumulative_frequency %}                
+                        {{ data.frequency }}{{ data.gender }}
+                    {% endif %}
+                    {% if forloop.last%}
+                        {% if not cumulative_frequency == 0 %}={% endif %}
+                        {{cumulative_frequency|rjust:"30" }}</td>
+                    {% endif %}    
+                    
+                {% endfor %}
+            {% endfor %}    
+            {% for month_total in model_report.month_totals %}
+                {% if month_total.year == year and month_total.month == month %}
+                    <td align="right">{{ month_total.total }}</td>        
+                {% endif %}  
+            {% endfor %}                  
+            </tr>                
+        {% endfor %}
+        {% for year_total in model_report.year_totals %}
+            {% if year_total.year == year %}        
+                <tr><td colspan=5>{{ year }}</td><td align="right">{{ year_total.total|rjust:"30" }}</td></tr>         
+            {% endif %}                  
+        {% endfor %}                    
+    {% endfor %}    
+    <tr><td colspan=5>TOTAL</td><td align="right">{{ model_report.total|rjust:"30" }}</td></tr>
+    <tr><td><small>({{ model_report.date_grouping_field }})</small></td><td colspan=5></td></tr>                              
+    </tbody>
+    </table>
+{% endif %}                      
+{% endfor %}        
+{% endfor %}    
+{% endblock%}

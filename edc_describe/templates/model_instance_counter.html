@@ -1,0 +1,41 @@
+{% extends "section.html"%}
+{% load describer_tags %}{% load common_tags %}
+
+{% block content %}
+<form action="." method="POST">
+<div style='display:none'>  
+  {% csrf_token %}
+</div>
+<table>
+<tr>
+{{ form }}
+<td>
+    <input type="submit" value="Submit" class="default" name="submit" />
+</td>
+
+<script type="text/javascript">document.getElementById("id_producer").focus();</script>
+<script type="text/javascript">
+    (function($) {
+        var field = null;
+    })(django.jQuery);
+</script>
+    </table>
+</form>
+
+
+<H4>Counts for Models in App : {{ app_label }}</H4>
+<table>
+<thead>
+<th>Model</th>
+<th>Count</th>
+</thead>
+{% for app_label, count in result.iteritems %}
+    <thead><th colspan="2"><B>{{ app_label }}</B></th></thead>
+    <tbody>
+    {% for r in count %}
+    <tr class="{% cycle 'row1' 'row2' %}"><td><A href="/admin/{{ app_label }}/{{ r.1 }}/?hostname_created={{ producer }}">{{r.0}}</A></td><td>{{r.2}}</td></tr>
+    {% endfor %}
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

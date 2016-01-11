@@ -1,0 +1,16 @@
+<table>
+    <tr>
+    <td class="field">
+    <form action="{% url 'model_data_inspector_url_name' %}" method="POST">
+    <div style='display:none'>{% csrf_token %}</div>
+    <input type="submit" value="List applications" class="default" name="a" />
+    </form>
+    </td>
+    {% if app_label %}
+        <td class="field">
+        <form action="{% url 'model_data_inspector_url_name' app_label=app_label %}" method="POST">
+        <div style='display:none'>{% csrf_token %}</div>
+        <input type="submit" value="List models for {{app_label}}" class="default" name="m" /></td>    
+        </form>    
+    {% endif %}
+    </tr></table>

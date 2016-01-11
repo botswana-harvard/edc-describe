@@ -1,0 +1,12 @@
+
+    <h4>Appications</h4>
+    <i>Click on an application below</i>
+    <table class="result">
+    <tbody>
+        {% for app_label in app_labels %}
+            <tr class="{% cycle 'row1' 'row2'%}">
+            <td><A href="?app_label={{app_label}}">{{app_label}}</A></td>
+            </tr>
+        {% endfor %}    
+    </tbody>
+    </table>

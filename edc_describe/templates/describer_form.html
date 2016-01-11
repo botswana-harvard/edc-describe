@@ -1,0 +1,31 @@
+<form action="." method="POST">
+<div style='display:none'>  
+  {% csrf_token %}
+</div>
+<table>
+<tr>
+<td class="field">
+    {{ form.app_label.errors }}
+    <label for="id_app_label">App_label</label>
+    {{ form.app_label }}
+</td>
+<td class="field">
+    {{ form.model_name.errors }}
+    <label for="id_model_name">Model Name</label>
+    {{ form.model_name }}
+</td>
+<td>
+    <input type="submit" value="Submit" class="default" name="submit" />
+</td>
+
+<script type="text/javascript">document.getElementById("id_app_label").focus();</script>
+<script type="text/javascript">
+    (function($) {
+        var field = null;
+    })(django.jQuery);
+</script>
+    </table>
+</form>
+
+    
+
