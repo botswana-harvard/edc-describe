@@ -1,4 +1,5 @@
 from django.db import models
+
 from edc_base.model.models import BaseUuidModel
 
 
@@ -12,17 +13,15 @@ class GroupingHint (BaseUuidModel):
 
     app_label = models.CharField(
         max_length=50,
-        db_index=True
-        )
+        db_index=True)
+
     model_name = models.CharField(
         max_length=50,
-        db_index=True
-        )
+        db_index=True)
 
     field_name = models.CharField(
         max_length=50,
-        db_index=True
-        )
+        db_index=True)
 
     objects = models.Manager()
 

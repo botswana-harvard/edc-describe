@@ -37,13 +37,17 @@ class ModelSelector(object):
     def set_model(self):
         self._model = get_model(self.get_app_label(), self.get_model_name())
         if not self._model:
-            AttributeError('Could not get model for app_label={0}, model_name={1}.'.format(self.get_app_label(), self.get_model_name()))
+            AttributeError(
+                'Could not get model for app_label={0}, model_name={1}.'.format(
+                    self.get_app_label(), self.get_model_name()))
 
     def get_model(self):
         return self._model
 
     def set_app_labels(self):
-        self._app_labels = [model._meta.app_label for model in get_models() if model._meta.app_label not in ['contenttypes', 'admin', 'auth', 'sites', 'sessions', 'south']]
+        self._app_labels = [
+            model._meta.app_label for model in get_models() if model._meta.app_label not in [
+                'contenttypes', 'admin', 'auth', 'sites', 'sessions', 'south']]
         self._app_labels = list(set(self._app_labels))
         self._app_labels.sort()
 
@@ -51,7 +55,10 @@ class ModelSelector(object):
         return self._app_labels
 
     def set_model_names(self):
-        self._model_names = [{'module_name':model._meta.module_name, 'verbose_name':model._meta.verbose_name} for model in get_models() if model._meta.app_label == self.get_app_label() and model._meta.verbose_name[-5:] != 'audit']
+        self._model_names = [
+            {'module_name': model._meta.module_name, 'verbose_name': model._meta.verbose_name}
+            for model in get_models() if model._meta.app_label == self.get_app_label() and
+            model._meta.verbose_name[-5:] != 'audit']
 
     def get_model_names(self):
         return self._model_names

@@ -1,4 +1,5 @@
 from django.db import models
+
 from edc_base.model.models import BaseUuidModel
 
 
@@ -8,25 +9,21 @@ class Related (BaseUuidModel):
 
     app_label = models.CharField(
         max_length=50,
-        db_index=True
-        )
+        db_index=True)
+
     model_name = models.CharField(
         max_length=50,
-        db_index=True
-        )
+        db_index=True)
 
     field_name = models.CharField(
         max_length=50,
-        db_index=True
-        )
+        db_index=True)
 
     related_to_model = models.CharField(
-        max_length=50,
-        )
+        max_length=50)
 
     related_to_field_name = models.CharField(
-        max_length=50,
-        )
+        max_length=50)
 
     objects = models.Manager()
 

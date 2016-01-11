@@ -16,7 +16,8 @@ from ..forms import DateRangeForm
 @login_required
 def base_model_group_describer(request, **kwargs):
 
-    """"Given an app and a foreignkey field, such as visit, select a list of models and calculate basic frequencies by gender and site"""
+    """"Given an app and a foreignkey field, such as visit, select a
+    list of models and calculate basic frequencies by gender and site"""
 
     app_list = kwargs.get('app_list')
     section_name = kwargs.get('section_name')
@@ -25,7 +26,6 @@ def base_model_group_describer(request, **kwargs):
     template = 'model_group_describer.html'
     months = []
     years = []
-    sites = []
     model_reports = {}
     # model_list = []
     model_reports_ordered_keys = []
@@ -97,9 +97,9 @@ def base_model_group_describer(request, **kwargs):
             for key, model_report in model_reports.items():
 
                 # note reference to actual db_table name ...mysql dependent??
-                extra_select = {'year': 'extract(year from ' + model_report['model']._meta.db_table + '.' +
+                extra_select = {'year': 'extract(year from ' + model_report['model']._meta.db_table + '.' + 
                                   model_report['date_grouping_field'] + ')',
-                                  'month': 'extract(month from ' + model_report['model']._meta.db_table + '.' +
+                                  'month': 'extract(month from ' + model_report['model']._meta.db_table + '.' + 
                                   model_report['date_grouping_field'] + ')'
                                   }
 

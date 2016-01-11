@@ -2,9 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from edc.core.model_selector.classes import ModelSelector
-from edc.core.model_selector.forms import ModelSelectorForm
 from edc.dashboard.section.classes import site_sections
+
+from ..classes import ModelSelector
+from ..forms import ModelSelectorForm
 
 from ..classes import ModelDataInspector
 
